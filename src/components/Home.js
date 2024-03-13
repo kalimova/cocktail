@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { NavLink } from "react-router-dom";
+
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    axios("www.thecocktaildb.com/api/json/v1/1/random.php").then(({ data }) =>
+      setProducts(data.drinks)
+    );
+  }, []);
+  console.log(products);
   return (
     <>
+    <NavLink to="/details">
       <div className="coctail">
         <div className="container">
           <div className="box__coctail">
@@ -58,14 +69,10 @@ const Home = () => {
           </div>
           <hr></hr>
 
-          <div className="popular__drinks">
-            <p className="popular__text">Popular Drinks</p>
-          </div>
-          <div className="popular__ingredients">
-            <p className="popular__text">Popular Ingredients</p>
-          </div>
+         
         </div>
       </div>
+      </NavLink>
     </>
   );
 };
