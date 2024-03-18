@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Details = ({ details }) => {
+  const [getId, setGetId] = useState({});
+  useEffect(() => {
+    axios(
+      `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${details[0]}`
+    ).then(({ data }) => setGetId(data));
+    console.log(getId);
+  }, []);
+  console.log(details);
+
+
   return (
     <>
+    {details.map((el) => (
+      console.log(el.idDrink)
+    ))}
       <html lang="es">
         <body>
           <section class="w-screen h-screen flex justify-center items-center px-2">
@@ -15,12 +29,10 @@ const Details = ({ details }) => {
               </div>
               <div class="p-3 space-y-3">
                 <h3 class="text-gray-700 font-semibold text-md">
-                  Instructions
+                  {details.idDrink}
                 </h3>
                 <p class="text-sm text-gray-900 leading-sm">
-                  Rub rim of cocktail glass with lime juice. Dip rim in coarse
-                  salt. Shake tequila, blue curacao, and lime juice with ice,
-                  strain into the salt-rimmed glass, and serve.
+                  {details.idDrink}
                 </p>
                 <p></p>
               </div>
