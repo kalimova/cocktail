@@ -29,11 +29,6 @@ button {
   margin-right: 50px;
   color: white;
 }
-.button__link:hover {
-  background-color: red;
-  border-radius: 5px;
-  padding: 10px;
-}
 .Box_button {
   background-color: red;
   border-radius: 5px;
@@ -44,6 +39,10 @@ button {
 }
 .image {
   padding: 30px;
+}
+
+.fa-solid {
+  margin-left: 15px;
 }
 /* //////////////////////// */
 

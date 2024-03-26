@@ -1,3 +1,4 @@
+import { click } from "@testing-library/user-event/dist/click";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -7,6 +8,9 @@ const Header = ({ setIsOpen, setSearch }) => {
       setSearch(e.target.value);
     }
   };
+const clickHandle = () => {
+  window.location.reload();   
+}
   return (
     <>
       <div className="Box">
@@ -25,16 +29,12 @@ const Header = ({ setIsOpen, setSearch }) => {
               <NavLink to="/">
                 <button className="Box_button">Home</button>
               </NavLink>
-
-              <NavLink to="/details">
-                <button className="button__link">API</button>
-              </NavLink>
-              <input
-                type="text"
-                placeholder="Search"
-                className="input"
-                onKeyDown={getByTitle}
-              />
+<button onClick={clickHandle}>
+<i class="fa-solid fa-spinner fa-xl" style={{color: "#FFD43B"}}></i>
+</button>
+              <div onKeyDown={(e) => getByTitle(e)}>
+                <input type="text" placeholder="Search" className="input" />
+              </div>
             </div>
           </div>
         </div>

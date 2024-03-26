@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-// 
+
 const Home = ({ setDetails }) => {
   const [product, setProduct] = useState([]);
   useEffect(() => {
     axios("https://www.thecocktaildb.com/api/json/v1/1/random.php")
-      .then(({ data }) => setProduct(data.drinks[0]))
-      .catch(error => console.error('Ошибка при получении случайного напитка:', error));
+      .then(({ data }) => {
+        if (data && data.drinks && data.drinks.length > 0) {
+          setProduct(data.drinks[0]);
+        } else {
+          console.error("Ошибка: Нет данных о напитках");
+        }
+      })
+      .catch((error) =>
+        console.error("Ошибка при получении случайного напитка:", error)
+      );
   }, []);
+
   console.log(product);
+
 
   return (
     <>
+      <p>{product.strDrink}</p>
       <div className="coctail">
         <div className="container">
           <div className="box__coctail">
@@ -56,18 +67,69 @@ const Home = ({ setDetails }) => {
           </div>
 
           <hr></hr>
-          <NavLink to="/details">
-            <div className="input__search">
-              <input
-                className="input__search__coctail"
-                type="text"
-                placeholder="Search for a Cocktail..."
-              />
-              <button>
-                <i className="button__search fa-solid fa-magnifying-glass"></i>
-              </button>
+          <div class="flex min-h-screen items-center justify-center">
+            <div class="relative flex w-full max-w-[48rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+              <div class="relative m-0 w-3/5 shrink-0 overflow-hidden rounded-xl rounded-r-none bg-white bg-clip-border text-gray-700">
+                <img
+                  src={product.strDrinkThumb}
+                  alt="image"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-6">
+                <h6 class="mb-4 block font-sans text-base font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased"></h6>
+                <h4 class="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                  {product.strCategory}
+                </h4>
+                <p class="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+                  {product.strInstructions}
+                </p>
+                <a class="inline-block" href="#">
+                  <button
+                    class="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button"
+                  >
+                    {product.strDrink}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      class="h-4 w-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                      ></path>
+                    </svg>
+                  </button>
+                </a>
+              </div>
             </div>
-          </NavLink>
+            <link
+              rel="stylesheet"
+              href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
+            />
+          </div>
+          <div class="flex items-center justify-center">
+            <div class="text-sm text-gray-700 py-1">
+              <a
+                class="text-gray-700 font-semibold"
+                href="https://www.material-tailwind.com/docs/html/card?ref=tailwindcomponents"
+                target="_blank"
+              ></a>{" "}
+              <a
+                href="https://www.creative-tim.com?ref=tailwindcomponents"
+                class="text-gray-700 font-semibold"
+                target="_blank"
+              >
+                {" "}
+              </a>
+            </div>
+          </div>
           <hr></hr>
 
           <footer class="">
